@@ -9,6 +9,7 @@ import Deposit from "./components/accountBalance/Deposit";
 import Withdraw from "./components/accountBalance/Withdraw";
 import AllData from "./components/allData/AllData";
 import Footer from "./components/Footer";
+import ProtectedRoute from "./components/navbar/ProtectedRoute";
 
 import { UserContext } from "./context";
 import { HashRouter as Router, Route } from "react-router-dom";
@@ -35,9 +36,9 @@ function App() {
             <Route path="/" exact component={Home} />
             <Route path="/CreateAccount/" component={CreateAccount} />
             <Route path="/Login/" component={Login} />
-            <Route path="/Deposit/" component={Deposit} />
-            <Route path="/Withdraw/" component={Withdraw} />
-            <Route path="/AllData/" component={AllData} />
+            <ProtectedRoute path="/Deposit/" component={Deposit} />
+            <ProtectedRoute path="/Withdraw/" component={Withdraw} />
+            <ProtectedRoute path="/AllData/" component={AllData} />
           </div>
         </UserContext.Provider>
       </Router>

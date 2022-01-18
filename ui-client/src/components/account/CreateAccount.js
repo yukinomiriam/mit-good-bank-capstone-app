@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import Card from "../Card";
 import AccountForm from "./AccountForm";
 
-import { UserContext } from "../../context";
+//import { UserContext } from "../../context";
 
 function CreateAccount() {
   const [show, setShow] = React.useState(true);
@@ -11,7 +11,7 @@ function CreateAccount() {
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
   const [isDisabled, setIsDisabled] = React.useState(true);
-  const ctx = React.useContext(UserContext);
+  //const ctx = React.useContext(UserContext);
 
   function validate(field, label) {
     let errorMessage = "";

@@ -3,17 +3,18 @@ import Card from "../Card";
 import RowTable from "./RowTable";
 
 function AllData() {
-  const [data, setData] = React.useState("");
+  const [dataContainer, setDataContainer] = React.useState({ data: [] });
 
   React.useEffect(() => {
     //fetch all accounts from API
     fetch("/account/all")
       .then((response) => response.json())
       .then((data) => {
-        console.log(data);
-        setData(JSON.stringify(data));
+        setDataContainer({ data: data });
+        console.log("data: " + data);
       });
   }, []);
+
   return (
     <>
       <Card
@@ -31,12 +32,9 @@ function AllData() {
                 </tr>
               </thead>
               <tbody>
-                {
-                  /*ctx.users.map((user, i) => (
+                {dataContainer.data.map((user, i) => (
                   <RowTable data={user} key={i} />
-                ))*/
-                  data
-                }
+                ))}
               </tbody>
             </table>
           </>
