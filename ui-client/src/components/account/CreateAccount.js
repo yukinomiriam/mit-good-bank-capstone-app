@@ -3,6 +3,7 @@ import Card from "../Card";
 import AccountForm from "./AccountForm";
 
 //import { UserContext } from "../../context";
+import AuthService from "../../services/auth.service";
 
 function CreateAccount() {
   const [show, setShow] = React.useState(true);
@@ -59,13 +60,27 @@ function CreateAccount() {
     if (!validate(email, "email")) return;
     if (!validate(password, "password")) return;
     //ctx.users.push({ name, email, password, balance: 100, isLogged: "false" });
-    const URL = `/account/create/${name}/${email}/${password}`;
+    /*const URL = `/account/create/${name}/${email}/${password}`;
     (async () => {
       var res = await fetch(URL);
       var data = await res.json();
       console.log(data);
-    })();
-    setShow(false);
+    })();*/
+    AuthService.register(name, email, password).then(
+      (response) => {
+        console.log("success" + response.data.message);
+        setShow(false);
+      },
+      (error) => {
+        const resMessage =
+          (error.response &&
+            error.response.data &&
+            error.response.data.message) ||
+          error.message ||
+          error.toString();
+        console.log("error: " + resMessage);
+      }
+    );
   }
 
   function clearForm() {

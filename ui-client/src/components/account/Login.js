@@ -1,16 +1,22 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Redirect } from "react-router-dom";
 import Card from "../Card";
 import AccountForm from "./AccountForm";
 
-import { UserContext } from "../../context";
+//import { UserContext } from "../../context";
 
-function Login() {
-  const [show, setShow] = React.useState(true);
-  const [email, setEmail] = React.useState("");
-  const [name, setName] = React.useState("");
-  const [password, setPassword] = React.useState("");
-  const [status, setStatus] = React.useState("");
-  const ctx = React.useContext(UserContext);
+import { login } from "../../actions/auth";
+
+function Login(props) {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [status, setStatus] = useState("");
+
+  const { isLoggedIn } = useSelector((state) => state.auth);
+  //const { message } = useSelector((state) => state.message);
+
+  const dispatch = useDispatch();
 
   function validate(field, label) {
     if (!field) {
@@ -25,36 +31,28 @@ function Login() {
       const errorMessage = `Error: Email has an invalid format`;
       setStatus(errorMessage);
       return false;
-      
     }
     return true;
   }
 
-  function handleLogin() {
+  const handleLogin = (e) => {
+    e.preventDefault();
     if (!validate(email, "email")) return;
     if (!validate(password, "password")) return;
-    let isValidUser = findUser(email, password);
-    if (isValidUser) {
-      setShow(false);
-    } else {
-      setStatus("Invalid user name or password");
+
+    dispatch(login(email, password))
+      .then(() => {
+        props.history.push("/welcome");
+        window.location.reload();
+      })
+      .catch(() => {
+        setStatus(`Error:  There was an error trying to login. `);
+      });
+
+    if (isLoggedIn) {
+      return <Redirect to="/welcome" />;
     }
-  }
-
-  function findUser(email, password) {
-    //console.log(email, password);
-    let isValid = false;
-    ctx.users.forEach((user) => {
-      //console.log(user.email, user.password);
-      if (user.email === email && user.password === password) {
-        user.isLogged = "true";
-        setName(user.name);
-        isValid = true;
-      }
-    });
-
-    return isValid;
-  }
+  };
 
   useEffect(() => {
     let isMounted = true;
@@ -65,7 +63,7 @@ function Login() {
       }, 3000);
     }
 
-    return () => isMounted = false;
+    return () => (isMounted = false);
   }, [status]);
 
   const loginForm = (
@@ -88,15 +86,7 @@ function Login() {
         maxWidth="40rem"
         className="card brand-centered brand-margin-top"
         status={status}
-        body={
-          show ? (
-            loginForm
-          ) : (
-            <>
-              <h5>Welcome {name}</h5>
-            </>
-          )
-        }
+        body={loginForm}
       />
     </>
   );

@@ -1,7 +1,26 @@
-import React from "react";
-import { MenuItems } from "./MenuItems";
+import React, { useEffect, useState } from "react";
+//import { MenuItems } from "./MenuItems";
+import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { logout } from "../../actions/auth";
 
-function NavBar() {
+function NavBar(props) {
+  const { user: currentUser } = useSelector((state) => state.auth);
+  const [showAdmin, setShowAdmin] = useState(false);
+
+  //const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (currentUser) {
+      console.group("use efferct - current user");
+      console.log(currentUser);
+      setShowAdmin(currentUser.roles.includes("ROLE_ADMIN"));
+    }
+  }, [currentUser]);
+
+  /*const logOut = () => {
+    dispatch(logout());
+  };*/
 
   const handleClick = (e) => {
     let targetEl = e.currentTarget;
@@ -11,15 +30,18 @@ function NavBar() {
     link.classList.add("active");
   };
 
-  const pageUrl = window.location.hash === "" ? "#/" : window.location.hash;
-  
+  const pageUrl =
+    window.location.pathname === "" ? "/" : window.location.pathname;
+  console.log(pageUrl);
+
   const activeItem = {
-    home: pageUrl === "#/" ? " active" : "",
-    createAccount: pageUrl === "#/CreateAccount/" ? " active" : "",
-    login: pageUrl === "#/Login/" ? " active" : "",
-    deposit: pageUrl === "#/Deposit/" ? " active" : "",
-    withdraw: pageUrl === "#/Withdraw/" ? " active" : "",
-    allData: pageUrl === "#/AllData/" ? " active" : "",
+    home: pageUrl === "/" ? " active" : "",
+    createAccount: pageUrl === "/createaccount" ? " active" : "",
+    login: pageUrl === "/login" ? " active" : "",
+    deposit: pageUrl === "/deposit" ? " active" : "",
+    withdraw: pageUrl === "/withdraw" ? " active" : "",
+    allData: pageUrl === "/alldata" ? " active" : "",
+    welcome: pageUrl === "/welcome" ? " active" : "",
   };
 
   return (
@@ -46,25 +68,99 @@ function NavBar() {
         id="navbarNav"
       >
         <ul className="navbar-nav">
-          {MenuItems.map(function (item, index) {
-            return (
-              <li
-                className="nav-item px-4"
-                key={index}
-                onClick={(e) => handleClick(e)}
-                id={index}
+          <li className="nav-item px-4" onClick={(e) => handleClick(e)}>
+            <a
+              className={"nav-link" + activeItem["home"]}
+              href="/"
+              title="Home"
+              data-toggle="tooltip"
+            >
+              Home
+            </a>
+          </li>
+          <li className="nav-item px-4" onClick={(e) => handleClick(e)}>
+            <a
+              className={"nav-link" + activeItem["createAccount"]}
+              href="/createaccount"
+              title="Create Account"
+              data-toggle="tooltip"
+            >
+              Create Account
+            </a>
+          </li>
+          {!currentUser && (
+            <li className="nav-item px-4" onClick={(e) => handleClick(e)}>
+              <a
+                className={"nav-link" + activeItem["login"]}
+                href="/login"
+                title="Login"
+                data-toggle="tooltip"
               >
-                <a
-                  className={"nav-link" + activeItem[item.id]}
-                  href={item.url}
-                  title={item.title}
-                  data-toggle="tooltip"
-                >
-                  {item.title}
-                </a>
-              </li>
-            );
-          })}
+                Login
+              </a>
+            </li>
+          )}
+
+          {currentUser && (
+            <li className="nav-item px-4" onClick={(e) => handleClick(e)}>
+              <Link
+                to={"/welcome"}
+                className={"nav-link" + activeItem["welcome"]}
+              >
+                Welcome
+              </Link>
+            </li>
+          )}
+          {currentUser && (
+            <li className="nav-item px-4" onClick={(e) => handleClick(e)}>
+              <a
+                className={"nav-link" + activeItem["deposit"]}
+                href="/deposit"
+                title="Deposit"
+                data-toggle="tooltip"
+              >
+                Deposit
+              </a>
+            </li>
+          )}
+          {currentUser && (
+            <li className="nav-item px-4" onClick={(e) => handleClick(e)}>
+              <a
+                className={"nav-link" + activeItem["withdraw"]}
+                href="/withdraw"
+                title="Withdraw"
+                data-toggle="tooltip"
+              >
+                Withdraw
+              </a>
+            </li>
+          )}
+
+          {currentUser && showAdmin && (
+            <li className="nav-item px-4" onClick={(e) => handleClick(e)}>
+              <a
+                className={"nav-link" + activeItem["allData"]}
+                href="/alldata"
+                title="All Data"
+                data-toggle="tooltip"
+              >
+                All Data
+              </a>
+            </li>
+          )}
+
+          {currentUser && (
+            <li className="nav-item px-4" onClick={props.logOut}>
+              <a
+                className={"nav-link"}
+                href="/login"
+                title="logout"
+                data-toggle="tooltip"
+              >
+                Logout
+              </a>
+            </li>
+          )}
         </ul>
       </div>
     </nav>
