@@ -18,4 +18,16 @@ module.exports = function (app) {
     [authJwt.verifyToken, authJwt.isAdmin],
     controller.adminBoard
   );
+  //find user by ID
+  app.get("/api/user/:id", [authJwt.verifyToken], controller.getById);
+
+  //update account's balance
+  app.put("/api/user/:id", [authJwt.verifyToken], controller.updateById);
+
+  //get all the accounts
+  app.get(
+    "/api/user/all",
+    [authJwt.verifyToken, authJwt.isAdmin],
+    controller.getAll
+  );
 };
