@@ -1,37 +1,67 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Redirect } from "react-router-dom";
 import { useSelector } from "react-redux";
+import Card from "../Card";
+import UserService from "../../services/user.service";
 
 const Welcome = () => {
   const { user: currentUser } = useSelector((state) => state.auth);
+  const [balance, setBalance] = useState(0);
 
-  if (!currentUser) {
-    return <Redirect to="/login" />;
-  }
+  useEffect(() => {
+    if (!currentUser) {
+      return <Redirect to="/login" />;
+    }
+  }, [currentUser]);
+
+  useEffect(() => {
+    UserService.getUserBalance(currentUser.id).then(
+      (response) => {
+        console.log("balance: " + response.data.balance);
+        let currentBalance = response.data.balance;
+        setBalance(response.data.balance);
+      },
+      (error) => {
+        const resMessage =
+          (error.response &&
+            error.response.data &&
+            error.response.data.message) ||
+          error.message ||
+          error.toString();
+        console.log("error: " + resMessage);
+        //setStatus(resMessage);
+      }
+    );
+  }, [currentUser.id]);
 
   return (
-    <div className="container">
-      <header className="jumbotron">
-        <h3>
-          Welcome <strong>{currentUser.username}</strong>
-        </h3>
-      </header>
-      <p>
-        <strong>Token:</strong> {currentUser.accessToken.substring(0, 20)} ...{" "}
-        {currentUser.accessToken.substr(currentUser.accessToken.length - 20)}
-      </p>
-      <p>
-        <strong>Id:</strong> {currentUser.id}
-      </p>
-      <p>
-        <strong>Email:</strong> {currentUser.email}
-      </p>
-      <strong>Authorities:</strong>
-      <ul>
-        {currentUser.roles &&
-          currentUser.roles.map((role, index) => <li key={index}>{role}</li>)}
-      </ul>
-    </div>
+    <Card
+      header="Welcome!!"
+      className="card brand-centered brand-margin-top"
+      maxWidth="40rem"
+      body={
+        <>
+          <div className="container">
+            <div className="row">
+              <div className="col">
+                <h4>
+                  Welcome {currentUser.firstName} {currentUser.lastName}
+                </h4>
+              </div>
+            </div>
+            <p>
+              <strong>Id:</strong> {currentUser.id}{" "}
+            </p>
+            <p>
+              <strong>Token:</strong> {currentUser.accessToken}{" "}
+            </p>
+            <p>
+              <strong>Balance:</strong> ${balance}
+            </p>
+          </div>
+        </>
+      }
+    />
   );
 };
 

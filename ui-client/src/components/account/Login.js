@@ -4,8 +4,6 @@ import { Redirect } from "react-router-dom";
 import Card from "../Card";
 import AccountForm from "./AccountForm";
 
-//import { UserContext } from "../../context";
-
 import { login } from "../../actions/auth";
 
 function Login(props) {
@@ -14,8 +12,6 @@ function Login(props) {
   const [status, setStatus] = useState("");
 
   const { isLoggedIn } = useSelector((state) => state.auth);
-  //const { message } = useSelector((state) => state.message);
-
   const dispatch = useDispatch();
 
   function validate(field, label) {

@@ -6,3 +6,7 @@ export const LOGOUT = "LOGOUT";
 
 export const SET_MESSAGE = "SET_MESSAGE";
 export const CLEAR_MESSAGE = "CLEAR_MESSAGE";
+
+export const GET_BALANCE = "GET_BALANCE";
+export const GET_BALANCE_FAIL = "GET_BALANCE_FAIL";
+export const UPDATE_BALANCE = "UPDATE_BALANCE";

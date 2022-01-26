@@ -1,9 +1,17 @@
-export default function authHeader() {
-  const user = JSON.parse(localStorage.getItem("user"));
+import axios from "axios";
+import authHeader from "./auth-header";
+const API_URL = "http://localhost:3001/api/user/";
 
-  if (user && user.accessToken) {
-    return { "x-access-token": user.accessToken };
-  } else {
-    return {};
+class UserService {
+  getUserBalance(id) {
+    return axios
+      .get(API_URL + "balance/" + id, { headers: authHeader() })
+      .then((response) => {
+        console.log("response: getUserBalance");
+        console.log(response.data);
+        return response.data;
+      });
   }
 }
+
+export default new UserService();

@@ -62,6 +62,7 @@ function Deposit() {
     setIsSuccess(true);
     setStatus("Success: Your deposit has been completed");
     event.preventDefault();
+    //TODO implement logic to update balance
   };
 
   /* function that updates the total balance*/

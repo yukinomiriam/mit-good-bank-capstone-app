@@ -2,7 +2,7 @@ import axios from "axios";
 
 const API_URL = "http://localhost:3001/api/auth/";
 const DEFAULT_BALANCE = 0;
-const DEFAULT_ROLE = ["user"];
+const DEFAULT_ROLE = ["USER"];
 
 class AuthService {
   login(email, password) {
@@ -25,9 +25,11 @@ class AuthService {
     console.log("logout");
   }
 
-  register(name, email, password) {
+  register(firstName, lastName, dob, email, password) {
     const newUser = {
-      username: name,
+      firstName: firstName,
+      lastName: lastName,
+      dob: dob,
       email: email,
       password: password,
       balance: DEFAULT_BALANCE,

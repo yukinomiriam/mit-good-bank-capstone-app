@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 //import { MenuItems } from "./MenuItems";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { logout } from "../../actions/auth";
+//import { logout } from "../../actions/auth";
 
 function NavBar(props) {
   const { user: currentUser } = useSelector((state) => state.auth);
@@ -12,8 +12,8 @@ function NavBar(props) {
 
   useEffect(() => {
     if (currentUser) {
-      console.group("use efferct - current user");
-      console.log(currentUser);
+      //console.group("use efferct - current user");
+      //console.log(currentUser);
       setShowAdmin(currentUser.roles.includes("ROLE_ADMIN"));
     }
   }, [currentUser]);
