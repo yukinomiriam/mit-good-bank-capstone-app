@@ -1,4 +1,4 @@
-import { GET_BALANCE } from "../actions/type";
+import { GET_BALANCE, UPDATE_BALANCE } from "../actions/type";
 
 const user = JSON.parse(localStorage.getItem("user"));
 const initialState = user
@@ -10,7 +10,8 @@ function userReducer(state = initialState, action) {
   switch (type) {
     case GET_BALANCE:
       return payload;
-
+    case UPDATE_BALANCE:
+      return payload;
     default:
       return state;
   }

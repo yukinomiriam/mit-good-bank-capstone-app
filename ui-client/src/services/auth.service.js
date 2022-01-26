@@ -1,6 +1,7 @@
 import axios from "axios";
 
-const API_URL = "http://localhost:3001/api/auth/";
+const PORT = process.env.PORT || 3000;
+const API_URL = "http://localhost:" + PORT + "/api/auth/";
 const DEFAULT_BALANCE = 0;
 const DEFAULT_ROLE = ["USER"];
 

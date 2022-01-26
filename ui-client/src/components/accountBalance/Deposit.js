@@ -1,22 +1,45 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import Card from "../Card";
 import AccountBalanceForm from "./AccountBalanceForm";
 
-//import { UserContext } from "../../context";
-import AuthService from "../../services/auth.service";
+import { useSelector } from "react-redux";
+import { Redirect } from "react-router-dom";
+import UserService from "../../services/user.service";
+import EventBus from "../../common/EventBus";
+
 function Deposit() {
-  //const ctx = React.useContext(UserContext);
-  let currentUser = AuthService.getCurrentUser();
-  let balance = !currentUser
-    ? 0
-    : currentUser.balance !== ""
-    ? currentUser.balance
-    : 0;
-  const [validTransaction, setValidTransaction] = React.useState(false);
-  const [total, setTotal] = React.useState(balance);
-  const [amount, setAmount] = React.useState(0);
-  const [status, setStatus] = React.useState("");
-  const [isSuccess, setIsSuccess] = React.useState(false);
+  const [validTransaction, setValidTransaction] = useState(false);
+  const [amount, setAmount] = useState(0);
+  const [status, setStatus] = useState("");
+  const [isSuccess, setIsSuccess] = useState(false);
+
+  const { user: currentUser } = useSelector((state) => state.auth);
+  const { isLoggedIn } = useSelector((state) => state.auth);
+  const [balance, setBalance] = useState(0);
+
+  useEffect(() => {
+    if (currentUser) {
+      UserService.getUserBalance(currentUser.id).then(
+        (response) => {
+          console.log("balance: " + response.data.balance);
+          setBalance(response.data.balance);
+        },
+        (error) => {
+          const resMessage =
+            (error.response &&
+              error.response.data &&
+              error.response.data.message) ||
+            error.message ||
+            error.toString();
+          console.log("error: " + resMessage);
+          //setStatus(resMessage);
+          if (error.response && error.response.status === 401) {
+            EventBus.dispatch("logout");
+          }
+        }
+      );
+    }
+  }, [currentUser]);
 
   const validateDeposit = (event) => {
     let amt = event.target.value;
@@ -55,26 +78,37 @@ function Deposit() {
   });
 
   const handleSubmit = (event) => {
-    let newTotal = total + amount;
-    setTotal(newTotal);
-    setValidTransaction(false);
-    updateUserBalance(newTotal);
-    setIsSuccess(true);
-    setStatus("Success: Your deposit has been completed");
+    let newBalance = balance + amount;
+    console.log("newBalance: " + newBalance);
+    UserService.updateUserBalance(currentUser.id, newBalance).then(
+      (response) => {
+        console.log("response: " + response.message);
+        setBalance(newBalance);
+        setStatus(response.message);
+        setValidTransaction(false);
+        setIsSuccess(true);
+      },
+      (error) => {
+        const resMessage =
+          (error.response &&
+            error.response.data &&
+            error.response.data.message) ||
+          error.message ||
+          error.toString();
+        console.log("error: " + resMessage);
+        setStatus(resMessage);
+        if (error.response && error.response.status === 401) {
+          EventBus.dispatch("logout");
+        }
+      }
+    );
     event.preventDefault();
-    //TODO implement logic to update balance
   };
-
-  /* function that updates the total balance*/
-  function updateUserBalance(newTotal) {
-    //ctx.users[0].balance = newTotal;
-    //TODO
-  }
 
   const accountDepositComponent = (
     <AccountBalanceForm
       label="Deposit"
-      total={total}
+      total={balance}
       validateTransaction={validateDeposit}
       handleSubmit={handleSubmit}
       validTransaction={validTransaction}
@@ -82,14 +116,18 @@ function Deposit() {
   );
   return (
     <>
-      <Card
-        header="Deposit"
-        className="card brand-centered brand-margin-top"
-        maxWidth="40rem"
-        status={status}
-        successFlag={isSuccess}
-        body={accountDepositComponent}
-      />
+      {isLoggedIn ? (
+        <Card
+          header="Deposit"
+          className="card brand-centered brand-margin-top"
+          maxWidth="40rem"
+          status={status}
+          successFlag={isSuccess}
+          body={accountDepositComponent}
+        />
+      ) : (
+        <Redirect to="/login" />
+      )}
     </>
   );
 }

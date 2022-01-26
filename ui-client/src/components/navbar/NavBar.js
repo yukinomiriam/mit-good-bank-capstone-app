@@ -1,26 +1,23 @@
 import React, { useEffect, useState } from "react";
-//import { MenuItems } from "./MenuItems";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
-//import { logout } from "../../actions/auth";
+
+// used for log out if token is expired
+import EventBus from "../../common/EventBus";
 
 function NavBar(props) {
   const { user: currentUser } = useSelector((state) => state.auth);
   const [showAdmin, setShowAdmin] = useState(false);
 
-  //const dispatch = useDispatch();
-
   useEffect(() => {
     if (currentUser) {
-      //console.group("use efferct - current user");
-      //console.log(currentUser);
       setShowAdmin(currentUser.roles.includes("ROLE_ADMIN"));
     }
-  }, [currentUser]);
 
-  /*const logOut = () => {
-    dispatch(logout());
-  };*/
+    EventBus.on("logout", () => {
+      props.logOut();
+    });
+  }, [currentUser, props]);
 
   const handleClick = (e) => {
     let targetEl = e.currentTarget;
