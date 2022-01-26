@@ -1,7 +1,7 @@
 const db = require("../model");
 const User = db.user;
 
-exports.allAccess = (req, res) => {
+/*exports.allAccess = (req, res) => {
   res.status(200).send("Public Content.");
 };
 
@@ -11,10 +11,11 @@ exports.userBoard = (req, res) => {
 
 exports.adminBoard = (req, res) => {
   res.status(200).send("Admin Content.");
-};
+};*/
 
-// -- logic to get user accounts/details
+// -- logic to get user/account details
 
+//find user by id
 exports.getById = (req, res) => {
   User.findById(req.params.id, function (err, user) {
     if (err) {
@@ -29,6 +30,21 @@ exports.getById = (req, res) => {
   });
 };
 
+//get user's balance by id
+exports.getUserBalanceById = (req, res) => {
+  User.findById(req.params.id, function (err, user) {
+    if (err) {
+      next(err);
+    } else {
+      res.json({
+        status: "success",
+        data: { balance: user.balance },
+      });
+    }
+  });
+};
+
+// get's all the users
 exports.getAll = (req, res) => {
   let usersList = [];
   User.find({}, function (err, users) {
@@ -52,7 +68,8 @@ exports.getAll = (req, res) => {
   });
 };
 
-exports.updateById = (req, res) => {
+//update's user balance by id
+exports.updateUserBalanceById = (req, res) => {
   console.log(req.params);
   console.log(req.body);
   User.findByIdAndUpdate(
@@ -64,7 +81,6 @@ exports.updateById = (req, res) => {
         res.json({
           status: "success",
           message: "Account balance has been updated successfully!!!",
-          data: null,
         });
       }
     }

@@ -9,9 +9,17 @@ var bcrypt = require("bcryptjs");
 // ---------------------------------- Create Account functionallity ------------------------------
 exports.createAccount = (req, res) => {
   console.log(`createAccount-email : ${req.body.email}`);
+  //generate random acct # with 9 digits
+  const acct = Math.floor(100000 + Math.random() * 900000000);
+  console.log("acct :" + acct);
+  const now = new Date();
   const user = new User({
-    username: req.body.username,
+    acct: acct,
+    firstName: req.body.firstName,
+    lastName: req.body.lastName,
+    dob: new Date(req.body.dob),
     email: req.body.email,
+    createdDate: now,
     password: bcrypt.hashSync(req.body.password, 8),
     balance: req.body.balance,
   });
@@ -22,6 +30,7 @@ exports.createAccount = (req, res) => {
       return;
     }
 
+    console.log(req.body.roles);
     if (req.body.roles) {
       Role.find(
         {
@@ -45,7 +54,7 @@ exports.createAccount = (req, res) => {
         }
       );
     } else {
-      Role.findOne({ name: "user" }, (err, role) => {
+      Role.findOne({ name: "USER" }, (err, role) => {
         if (err) {
           res.status(500).send({ message: err });
           return;
@@ -105,11 +114,12 @@ exports.signin = (req, res) => {
       }
       res.status(200).send({
         id: user._id,
-        username: user.username,
+        acct: user.acct,
+        firstName: user.firstName,
+        lastName: user.lastName,
         email: user.email,
         roles: authorities,
         accessToken: token,
-        balance: user.balance,
       });
     });
 };

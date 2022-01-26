@@ -52,7 +52,7 @@ function initial() {
   Role.estimatedDocumentCount((err, count) => {
     if (!err && count === 0) {
       new Role({
-        name: "user",
+        name: "USER",
       }).save((err) => {
         if (err) {
           console.log("error", err);
@@ -62,7 +62,7 @@ function initial() {
       });
 
       new Role({
-        name: "admin",
+        name: "ADMIN",
       }).save((err) => {
         if (err) {
           console.log("error", err);
