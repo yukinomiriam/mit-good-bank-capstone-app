@@ -1,29 +1,18 @@
 const db = require("../model");
 const User = db.user;
 
-/*exports.allAccess = (req, res) => {
-  res.status(200).send("Public Content.");
-};
-
-exports.userBoard = (req, res) => {
-  res.status(200).send("User Content.");
-};
-
-exports.adminBoard = (req, res) => {
-  res.status(200).send("Admin Content.");
-};*/
-
 // -- logic to get user/account details
 
 //find user by id
 exports.getById = (req, res) => {
+  console.log("called: getById");
   User.findById(req.params.id, function (err, user) {
     if (err) {
       next(err);
     } else {
       res.json({
         status: "success",
-        message: "User found!!!",
+        message: "User found!",
         data: { user: user },
       });
     }
@@ -32,6 +21,7 @@ exports.getById = (req, res) => {
 
 //get user's balance by id
 exports.getUserBalanceById = (req, res) => {
+  console.log("called: getUserBalanceById");
   User.findById(req.params.id, function (err, user) {
     if (err) {
       next(err);
@@ -46,6 +36,7 @@ exports.getUserBalanceById = (req, res) => {
 
 // get's all the users
 exports.getAll = (req, res) => {
+  console.log("called: getAll");
   let usersList = [];
   User.find({}, function (err, users) {
     if (err) {
@@ -61,7 +52,7 @@ exports.getAll = (req, res) => {
       }
       res.json({
         status: "success",
-        message: "Users list found!!!",
+        message: "Users list found!",
         data: { movies: moviesList },
       });
     }
@@ -70,8 +61,7 @@ exports.getAll = (req, res) => {
 
 //update's user balance by id
 exports.updateUserBalanceById = (req, res) => {
-  console.log(req.params);
-  console.log(req.body);
+  console.log("called: updateUserBalanceById");
   User.findByIdAndUpdate(
     req.params.id,
     { balance: Number(req.body.balance) },
@@ -80,7 +70,7 @@ exports.updateUserBalanceById = (req, res) => {
       else {
         res.json({
           status: "success",
-          message: "Account balance has been updated successfully!!!",
+          message: "Account balance has been updated successfully!",
         });
       }
     }
