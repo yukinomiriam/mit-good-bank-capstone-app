@@ -6,11 +6,10 @@
   align-items: center;
   justify-content: center;
   height: 85vh;
-
 }
 
 .home-background::before {
-  content: '';
+  content: "";
   background-image: url("/src/img/bank-person.jpg");
   background-repeat: no-repeat;
   background-size: cover;
@@ -23,8 +22,8 @@
 }
 
 .brand-text {
-  /*color: #24a464 !important;*/
-  background: -webkit-linear-gradient(#14633b, #24a464);
+  /*color: #283e90 !important;*/
+  background: -webkit-linear-gradient(#283e90, #262660);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   font-weight: bold;
@@ -32,15 +31,15 @@
 }
 
 .brand-background {
-  background-image: linear-gradient(#14633b, #24a464) !important;
+  background-image: linear-gradient(#283e90, #262660) !important;
   color: #fff !important;
   letter-spacing: 1px;
 }
 
 .brand-button {
-  background-image: linear-gradient(#14633b, #24a464) !important;
+  background-image: linear-gradient(#283e90, #262660) !important;
   color: #fff !important;
-  border: 1px solid #24a464;
+  border: 1px solid #283e90;
 }
 
 .brand-button:disabled {
@@ -49,8 +48,8 @@
 
 .brand-button:hover {
   background-image: linear-gradient(#e3fcef, #fff) !important;
-  color: #24a464 !important;
-  border: 1px solid #24a464;
+  color: #283e90 !important;
+  border: 1px solid #283e90;
 }
 
 .brand-centered {
@@ -62,17 +61,17 @@
 }
 
 .brand-active {
-  border-bottom: 2px solid #14633b;
-  border-top: 2px solid #14633b;
-  color: #14633b !important;
+  border-bottom: 2px solid #262660;
+  border-top: 2px solid #262660;
+  color: #262660 !important;
   font-weight: bold !important;
   top: 0;
 }
 
-.nav-link.active{
-  border-bottom: 2px solid #14633b;
-  border-top: 2px solid #14633b;
-  color: #14633b !important;
+.nav-link.active {
+  border-bottom: 2px solid #262660;
+  border-top: 2px solid #262660;
+  color: #262660 !important;
   font-weight: bold !important;
   top: 0;
 }
@@ -83,7 +82,7 @@
 
 .brand-table-th {
   width: 30%;
-  border-bottom: 2px solid #14633b;
+  border-bottom: 2px solid #262660;
   text-align: center;
 }
 
@@ -135,7 +134,7 @@
 #navbarNav ul li a:before {
   /*transition: all 0.5s;*/
   backface-visibility: hidden;
-  border: 2px solid rgba(#14633b, 0);
+  border: 2px solid rgba(#262660, 0);
   bottom: 0px;
   content: " ";
   display: block;
@@ -145,7 +144,7 @@
 }
 
 #navbarNav ul li a:hover {
-  color: #14633b;
+  color: #262660;
   font-weight: bold;
 }
 
@@ -165,7 +164,7 @@
   width: 0%;
   content: ".";
   color: transparent;
-  background-image: linear-gradient(#14633b, #24a464);
+  background-image: linear-gradient(#283e90, #262660);
   height: 2px;
 }
 #navbarNav.collapse.navbar-collapse ul li a:hover:before,
@@ -185,7 +184,7 @@
   opacity: 0;
 }
 #navbarNav ul li a:hover {
-  color: #14633b;
+  color: #262660;
   z-index: 1;
 }
 
@@ -203,16 +202,16 @@
 }
 
 @media (min-width: 1400px) {
-.right {
-  margin: auto;
-  left: 40em;
-  right: 0;
-  top: 0;
-  bottom: 0;
-  position: relative;
-  opacity: 1;
-  margin-top: 20px;
-}
+  .right {
+    margin: auto;
+    left: 40em;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    position: relative;
+    opacity: 1;
+    margin-top: 20px;
+  }
 }
 
 @media (max-width: 575.98px) {
@@ -250,7 +249,7 @@
   left: 0;
   bottom: 0;
   width: 100%;
-  background-image: linear-gradient(#14633b, #24a464) !important;
+  background-image: linear-gradient(#283e90, #262660) !important;
   letter-spacing: 1px;
   text-align: center;
   height: 60px;
@@ -262,7 +261,7 @@
     left: 0;
     bottom: 0;
     width: 100%;
-    background-image: linear-gradient(#14633b, #24a464) !important;
+    background-image: linear-gradient(#283e90, #262660) !important;
     letter-spacing: 1px;
     text-align: center;
     height: 60px;

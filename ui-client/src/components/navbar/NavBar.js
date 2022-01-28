@@ -9,6 +9,8 @@ function NavBar(props) {
   const { user: currentUser } = useSelector((state) => state.auth);
   const [showAdmin, setShowAdmin] = useState(false);
 
+  console.log("Home-current user:" + currentUser);
+
   useEffect(() => {
     if (currentUser) {
       setShowAdmin(currentUser.roles.includes("ROLE_ADMIN"));
@@ -44,9 +46,9 @@ function NavBar(props) {
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light">
       <div className="p-3">
-        <img src="bad-bank-3d-logo.png" alt="BadBank" width="65px" />
+        <img src="bank-logo.png" alt="MyBank" width="65px" />
         <a className="navbar-brand brand-text" href="#/" title="Home Page">
-          BadBank
+          MyBank
         </a>
       </div>
       <button
