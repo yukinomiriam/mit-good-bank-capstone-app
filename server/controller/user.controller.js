@@ -1,6 +1,6 @@
 const db = require("../model");
 const User = db.user;
-
+const Transaction = require("./transaction.controller");
 // -- logic to get user/account details
 
 //find user by id
@@ -53,7 +53,7 @@ exports.getAll = (req, res) => {
       res.json({
         status: "success",
         message: "Users list found!",
-        data: { movies: moviesList },
+        data: { users: usersList },
       });
     }
   });
@@ -62,17 +62,38 @@ exports.getAll = (req, res) => {
 //update's user balance by id
 exports.updateUserBalanceById = (req, res) => {
   console.log("called: updateUserBalanceById");
+  const newBalance = Number(req.body.balance);
+  const transAmount = Number(req.body.amount);
+  const transType = req.body.transType;
   User.findByIdAndUpdate(
     req.params.id,
-    { balance: Number(req.body.balance) },
+    { balance: newBalance },
     function (err, user) {
       if (err) next(err);
       else {
+        //now we emulate posting by creating a transaction record in the table
+        Transaction.createTransaction(
+          user.acct,
+          transAmount,
+          transType,
+          user._id
+        );
+        const message = `Your ${transType} has been completed successfully`;
         res.json({
           status: "success",
-          message: "Account balance has been updated successfully!",
+          message: message,
         });
       }
     }
   );
+};
+
+exports.getUserById = (userID) => {
+  User.findById(userID, function (err, user) {
+    if (err) {
+      return;
+    } else {
+      return user;
+    }
+  });
 };

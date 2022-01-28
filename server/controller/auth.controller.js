@@ -8,11 +8,13 @@ var bcrypt = require("bcryptjs");
 
 // ---------------------------------- Create Account functionallity ------------------------------
 exports.createAccount = (req, res) => {
-  console.log(`createAccount-email : ${req.body.email}`);
+  //console.log(`createAccount-email : ${req.body.email}`);
   //generate random acct # with 9 digits
   const acct = Math.floor(100000 + Math.random() * 900000000);
-  console.log("acct :" + acct);
-  const now = new Date();
+  //console.log("acct :" + acct);
+  const now = new Date().toLocaleString("en-US", {
+    timeZone: "America/Chicago",
+  });
   const user = new User({
     acct: acct,
     firstName: req.body.firstName,
