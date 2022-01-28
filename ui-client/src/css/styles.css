@@ -85,11 +85,23 @@
   border-bottom: 2px solid #262660;
   text-align: center;
 }
+.brand-table-th-small {
+  width: 20%;
+  border-bottom: 2px solid #262660;
+  text-align: center;
+}
 
 .brand-table-td {
   width: 30%;
   border-bottom: 0.01em solid rgba(100, 112, 129, 0.25);
   text-align: center;
+}
+
+.brand-table-td-small {
+  width: 20%;
+  border-bottom: 0.01em solid rgba(100, 112, 129, 0.25);
+  text-align: center;
+  font-size: small;
 }
 
 .amount-input {
@@ -295,4 +307,8 @@
   position: relative;
   color: #fff !important;
   padding: 0.2em 0;
+}
+
+.bottom-border {
+  border-bottom: 0.01em solid rgba(100, 112, 129, 0.25);
 }

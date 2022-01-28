@@ -71,7 +71,7 @@ const Welcome = () => {
           maxWidth="60rem"
           body={
             <>
-              <div className="container">
+              <div className="container bottom-border">
                 <div className="row">
                   <div className="col">
                     <h4>
@@ -107,22 +107,23 @@ const Welcome = () => {
                 <table className="brand-table">
                   <thead>
                     <tr>
-                      <th className="brand-table-th">Tans Number</th>
-                      <th className="brand-table-th">Trans Type</th>
-                      <th className="brand-table-th">Amount</th>
-                      <th className="brand-table-th">Date</th>
+                      <th className="brand-table-th-small">Tans Number</th>
+                      <th className="brand-table-th-small">Trans Type</th>
+                      <th className="brand-table-th-small">Amount</th>
+                      <th className="brand-table-th-small">Date</th>
+                      <th className="brand-table-th-small">Time</th>
                     </tr>
                   </thead>
                   <tbody>
                     {transList.map((transaction, i) => (
                       <tr>
-                        <td className="brand-table-td">
+                        <td className="brand-table-td-small">
                           {transaction.tranNumber}
                         </td>
-                        <td className="brand-table-td">
+                        <td className="brand-table-td-small">
                           {transaction.tranType}
                         </td>
-                        <td className="brand-table-td">
+                        <td className="brand-table-td-small">
                           {
                             <CurrencyFormat
                               value={transaction.amount.toFixed(2)}
@@ -132,8 +133,15 @@ const Welcome = () => {
                             />
                           }
                         </td>
-                        <td className="brand-table-td">
-                          {transaction.createdDate}
+                        <td className="brand-table-td-small">
+                          {new Date(transaction.createdDate).toLocaleDateString(
+                            "en-US"
+                          )}
+                        </td>
+                        <td className="brand-table-td-small">
+                          {new Date(
+                            transaction.createdDate
+                          ).toLocaleTimeString()}
                         </td>
                       </tr>
                     ))}
