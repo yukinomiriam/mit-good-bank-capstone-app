@@ -16,6 +16,7 @@ function Deposit() {
   const { user: currentUser } = useSelector((state) => state.auth);
   const { isLoggedIn } = useSelector((state) => state.auth);
   const [balance, setBalance] = useState(0);
+  const DEPOSIT = "Deposit";
 
   useEffect(() => {
     if (currentUser) {
@@ -80,7 +81,12 @@ function Deposit() {
   const handleSubmit = (event) => {
     let newBalance = balance + amount;
     console.log("newBalance: " + newBalance);
-    UserService.updateUserBalance(currentUser.id, newBalance).then(
+    UserService.updateUserBalance(
+      currentUser.id,
+      amount,
+      newBalance,
+      DEPOSIT
+    ).then(
       (response) => {
         console.log("response: " + response.message);
         setBalance(newBalance);

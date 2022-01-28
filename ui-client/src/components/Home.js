@@ -7,12 +7,10 @@ function Home() {
           className="card mb-3"
           maxWidth="26rem"
           txtcolor="black"
-          header="BadBank"
-          title="Welcome to BadBank"
+          header="MyBank"
+          title="Welcome to MyBank"
           text="You're Not Just Another Customer. We're Not Just Another Bank."
-          body={
-            <img src="bad-bank-3d-logo.png" className="img-fluid" alt="Logo" />
-          }
+          body={<img src="bank-logo.png" className="img-fluid" alt="Logo" />}
         />
       </div>
     </div>

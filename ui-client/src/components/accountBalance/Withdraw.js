@@ -8,7 +8,6 @@ import UserService from "../../services/user.service";
 
 function Withdraw(props) {
   const [validTransaction, setValidTransaction] = useState(false);
-  const [total, setTotal] = useState(0);
   const [amount, setAmount] = useState(0);
   const [status, setStatus] = useState("");
   const [isSuccess, setIsSuccess] = useState(false);
@@ -16,6 +15,7 @@ function Withdraw(props) {
   const { user: currentUser } = useSelector((state) => state.auth);
   const { isLoggedIn } = useSelector((state) => state.auth);
   const [balance, setBalance] = useState(0);
+  const WITHDRAW = "Withdraw";
 
   useLayoutEffect(() => {
     if (currentUser) {
@@ -79,11 +79,9 @@ function Withdraw(props) {
   });
 
   const handleSubmit = (event) => {
-    /*let newTotal = total - amount;
-    if (amount > total) {
-      let newTotal = total;
+    if (amount > balance) {
       setStatus(
-        `Error: You cannot withdraw more than ${newTotal.toLocaleString(
+        `Error: You cannot withdraw more than ${balance.toLocaleString(
           "en-US",
           {
             style: "currency",
@@ -94,19 +92,37 @@ function Withdraw(props) {
       setIsSuccess(false);
       return setValidTransaction(false);
     }
-
-    setTotal(newTotal);
-    setValidTransaction(false);
-    updateUserBalance(newTotal);
-    setIsSuccess(true);
-    setStatus("Success: Your withdrawal has been completed");
-    event.preventDefault();*/
+    let newBalance = balance - amount;
+    console.log("newBalance: " + newBalance);
+    UserService.updateUserBalance(
+      currentUser.id,
+      amount,
+      newBalance,
+      WITHDRAW
+    ).then(
+      (response) => {
+        console.log("response: " + response.message);
+        setBalance(newBalance);
+        setStatus(response.message);
+        setValidTransaction(false);
+        setIsSuccess(true);
+      },
+      (error) => {
+        const resMessage =
+          (error.response &&
+            error.response.data &&
+            error.response.data.message) ||
+          error.message ||
+          error.toString();
+        console.log("error: " + resMessage);
+        setStatus(resMessage);
+        if (error.response && error.response.status === 401) {
+          EventBus.dispatch("logout");
+        }
+      }
+    );
+    event.preventDefault();
   };
-
-  /* function that updates the total balance*/
-  function updateUserBalance(newTotal) {
-    // ctx.users[0].balance = newTotal;
-  }
 
   const accountWithdrawComponent = (
     <AccountBalanceForm

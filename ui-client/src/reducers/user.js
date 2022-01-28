@@ -1,4 +1,8 @@
-import { GET_BALANCE, UPDATE_BALANCE } from "../actions/type";
+import {
+  GET_BALANCE_SUCCESS,
+  UPDATE_BALANCE_SUCCESS,
+  GET_TRANSACTIONS_SUCCESS,
+} from "../actions/type";
 
 const user = JSON.parse(localStorage.getItem("user"));
 const initialState = user
@@ -8,9 +12,11 @@ const initialState = user
 function userReducer(state = initialState, action) {
   const { type, payload } = action;
   switch (type) {
-    case GET_BALANCE:
+    case GET_BALANCE_SUCCESS:
       return payload;
-    case UPDATE_BALANCE:
+    case UPDATE_BALANCE_SUCCESS:
+      return payload;
+    case GET_TRANSACTIONS_SUCCESS:
       return payload;
     default:
       return state;

@@ -5,9 +5,9 @@ const PORT = process.env.PORT || 3000;
 const API_URL = "http://localhost:" + PORT + "/api/user/";
 
 class UserService {
-  getUserBalance(id) {
+  getUserBalance(userID) {
     return axios
-      .get(API_URL + "balance/" + id, { headers: authHeader() })
+      .get(API_URL + "balance/" + userID, { headers: authHeader() })
       .then((response) => {
         console.log("response: getUserBalance");
         console.log(response.data);
@@ -15,16 +15,27 @@ class UserService {
       });
   }
 
-  updateUserBalance(id, balance) {
-    const newBalance = {
+  updateUserBalance(userID, amount, balance, transType) {
+    const body = {
+      amount: amount,
       balance: balance,
+      transType: transType,
     };
-    console.log("updateUserBalance: " + API_URL + "balance/" + id);
-    console.log(newBalance);
+    console.log("updateUserBalance: " + API_URL + "balance/" + userID);
     return axios
-      .put(API_URL + "balance/" + id, newBalance, { headers: authHeader() })
+      .put(API_URL + "balance/" + userID, body, { headers: authHeader() })
       .then((response) => {
         console.log("response: updateUserBalance");
+        console.log(response.data);
+        return response.data;
+      });
+  }
+
+  getUserTrans(userID) {
+    return axios
+      .get(API_URL + "transactions/" + userID, { headers: authHeader() })
+      .then((response) => {
+        console.log("response: getUserTrans");
         console.log(response.data);
         return response.data;
       });
