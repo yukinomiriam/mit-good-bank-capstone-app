@@ -13,7 +13,7 @@ const Welcome = () => {
   const { isLoggedIn } = useSelector((state) => state.auth);
   const [balance, setBalance] = useState(0);
   const [transList, setTransList] = useState([]);
-
+  console.log("isLoggedIn: " + isLoggedIn);
   useEffect(() => {
     if (currentUser) {
       UserService.getUserBalance(currentUser.id).then(
@@ -115,36 +115,37 @@ const Welcome = () => {
                     </tr>
                   </thead>
                   <tbody>
-                    {transList.map((transaction, i) => (
-                      <tr>
-                        <td className="brand-table-td-small">
-                          {transaction.tranNumber}
-                        </td>
-                        <td className="brand-table-td-small">
-                          {transaction.tranType}
-                        </td>
-                        <td className="brand-table-td-small">
-                          {
-                            <CurrencyFormat
-                              value={transaction.amount.toFixed(2)}
-                              displayType={"text"}
-                              thousandSeparator={true}
-                              prefix={"$"}
-                            />
-                          }
-                        </td>
-                        <td className="brand-table-td-small">
-                          {new Date(transaction.createdDate).toLocaleDateString(
-                            "en-US"
-                          )}
-                        </td>
-                        <td className="brand-table-td-small">
-                          {new Date(
-                            transaction.createdDate
-                          ).toLocaleTimeString()}
-                        </td>
-                      </tr>
-                    ))}
+                    {transList.size > 0 &&
+                      transList.map((transaction, i) => (
+                        <tr>
+                          <td className="brand-table-td-small">
+                            {transaction.tranNumber}
+                          </td>
+                          <td className="brand-table-td-small">
+                            {transaction.tranType}
+                          </td>
+                          <td className="brand-table-td-small">
+                            {
+                              <CurrencyFormat
+                                value={transaction.amount.toFixed(2)}
+                                displayType={"text"}
+                                thousandSeparator={true}
+                                prefix={"$"}
+                              />
+                            }
+                          </td>
+                          <td className="brand-table-td-small">
+                            {new Date(
+                              transaction.createdDate
+                            ).toLocaleDateString("en-US")}
+                          </td>
+                          <td className="brand-table-td-small">
+                            {new Date(
+                              transaction.createdDate
+                            ).toLocaleTimeString()}
+                          </td>
+                        </tr>
+                      ))}
                   </tbody>
                 </table>
               </div>

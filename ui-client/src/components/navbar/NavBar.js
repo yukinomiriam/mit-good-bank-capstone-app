@@ -106,7 +106,7 @@ function NavBar(props) {
                 to={"/welcome"}
                 className={"nav-link" + activeItem["welcome"]}
               >
-                Welcome
+                My Account
               </Link>
             </li>
           )}
