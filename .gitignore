@@ -74,5 +74,4 @@ typings/
 
 # FuseBox cache
 .fusebox/
-server/config/auth.config.js
 .vscode/settings.json
