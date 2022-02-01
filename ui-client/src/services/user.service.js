@@ -40,6 +40,16 @@ class UserService {
         return response.data;
       });
   }
+
+  getAllUsers(userID) {
+    return axios
+      .get(API_URL + "all/" + userID, { headers: authHeader() })
+      .then((response) => {
+        console.log("response: getAllUsers");
+        console.log(response.data);
+        return response.data;
+      });
+  }
 }
 
 export default new UserService();

@@ -1,5 +1,7 @@
+const { user } = require("../model");
 const db = require("../model");
 const User = db.user;
+const Role = db.role;
 const Transaction = require("./transaction.controller");
 // -- logic to get user/account details
 
@@ -38,25 +40,35 @@ exports.getUserBalanceById = (req, res) => {
 exports.getAll = (req, res) => {
   console.log("called: getAll");
   let usersList = [];
-  User.find({}, function (err, users) {
-    if (err) {
-      next(err);
-    } else {
-      for (let user of users) {
-        usersList.push({
-          id: user._id,
-          username: user.username,
-          email: user.email,
-          roles: user.roles,
+  User.find({})
+    .populate("roles", "-__v")
+    .exec(function (err, users) {
+      if (err) {
+        next(err);
+      } else {
+        for (let user of users) {
+          var authorities = [];
+
+          for (let i = 0; i < user.roles.length; i++) {
+            authorities.push("ROLE_" + user.roles[i].name.toUpperCase());
+          }
+          usersList.push({
+            id: user._id,
+            acct: user.acct,
+            firstName: user.firstName,
+            lastName: user.lastName,
+            username: user.username,
+            email: user.email,
+            roles: authorities,
+          });
+        }
+        res.json({
+          status: "success",
+          message: "Users list found!",
+          data: { users: usersList },
         });
       }
-      res.json({
-        status: "success",
-        message: "Users list found!",
-        data: { users: usersList },
-      });
-    }
-  });
+    });
 };
 
 //update's user balance by id

@@ -10,15 +10,15 @@ import * as solid from "@fortawesome/free-solid-svg-icons";
 
 const Welcome = () => {
   const { user: currentUser } = useSelector((state) => state.auth);
-  const { isLoggedIn } = useSelector((state) => state.auth);
+  //const { isLoggedIn } = useSelector((state) => state.auth);
   const [balance, setBalance] = useState(0);
   const [transList, setTransList] = useState([]);
-  console.log("isLoggedIn: " + isLoggedIn);
+
   useEffect(() => {
     if (currentUser) {
       UserService.getUserBalance(currentUser.id).then(
         (response) => {
-          console.log("balance: " + response.data.balance);
+          //console.log("balance: " + response.data.balance);
           setBalance(response.data.balance);
         },
         (error) => {
@@ -28,7 +28,7 @@ const Welcome = () => {
               error.response.data.message) ||
             error.message ||
             error.toString();
-          console.log("error: " + resMessage);
+          console.error("error: " + resMessage);
           //setStatus(resMessage);
           if (error.response && error.response.status === 401) {
             EventBus.dispatch("logout");
@@ -42,7 +42,7 @@ const Welcome = () => {
     if (currentUser) {
       UserService.getUserTrans(currentUser.id).then(
         (response) => {
-          console.log("transactions: " + response.data.transactions);
+          //console.log("transactions: " + response.data.transactions);
           setTransList(response.data.transactions);
         },
         (error) => {
@@ -52,7 +52,7 @@ const Welcome = () => {
               error.response.data.message) ||
             error.message ||
             error.toString();
-          console.log("error: " + resMessage);
+          console.error("error: " + resMessage);
           //setStatus(resMessage);
           if (error.response && error.response.status === 401) {
             EventBus.dispatch("logout");
@@ -64,7 +64,7 @@ const Welcome = () => {
 
   return (
     <>
-      {isLoggedIn ? (
+      {currentUser ? (
         <Card
           header="Welcome"
           className="card brand-centered brand-margin-top"

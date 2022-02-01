@@ -7,6 +7,8 @@ import {
   UPDATE_BALANCE_FAIL,
   GET_TRANSACTIONS_SUCCESS,
   GET_TRANSACTIONS_FAIL,
+  GET_ALL_SUCCESS,
+  GET_ALL_FAIL,
 } from "./type";
 
 export const getUserBalance = (userID) => (dispatch) => {
@@ -80,7 +82,6 @@ export const updateUserBalance =
   };
 
 // Get User's transactions history
-
 export const getUserTrans = (userID) => (dispatch) => {
   return UserService.getUserTrans(userID).then(
     (response) => {
@@ -101,6 +102,39 @@ export const getUserTrans = (userID) => (dispatch) => {
 
       dispatch({
         type: GET_TRANSACTIONS_FAIL,
+      });
+
+      dispatch({
+        type: SET_MESSAGE,
+        payload: message,
+      });
+
+      return Promise.reject();
+    }
+  );
+};
+
+// Get all users
+export const getAllUsers = (userID) => (dispatch) => {
+  return UserService.getAllUsers(userID).then(
+    (response) => {
+      dispatch({
+        type: GET_ALL_SUCCESS,
+        payload: response.data,
+      });
+
+      return Promise.resolve();
+    },
+    (error) => {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+
+      dispatch({
+        type: GET_ALL_FAIL,
       });
 
       dispatch({

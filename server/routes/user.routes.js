@@ -38,7 +38,7 @@ module.exports = function (app) {
 
   //get all the accounts
   app.get(
-    "/api/user/all",
+    "/api/user/all/:id",
     [authJwt.verifyToken, authJwt.isAdmin],
     controller.getAll
   );
