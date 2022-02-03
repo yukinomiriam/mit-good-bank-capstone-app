@@ -77,16 +77,18 @@ function NavBar(props) {
               Home
             </a>
           </li>
-          <li className="nav-item px-4" onClick={(e) => handleClick(e)}>
-            <a
-              className={"nav-link" + activeItem["createAccount"]}
-              href="/createaccount"
-              title="Create Account"
-              data-toggle="tooltip"
-            >
-              Create Account
-            </a>
-          </li>
+          {!currentUser && (
+            <li className="nav-item px-4" onClick={(e) => handleClick(e)}>
+              <a
+                className={"nav-link" + activeItem["createAccount"]}
+                href="/createaccount"
+                title="Create Account"
+                data-toggle="tooltip"
+              >
+                Create Account
+              </a>
+            </li>
+          )}
           {!currentUser && (
             <li className="nav-item px-4" onClick={(e) => handleClick(e)}>
               <a
