@@ -1,12 +1,12 @@
 const express = require("express");
 const cors = require("cors");
-const dbConfig = require("../config/db.config");
+const dbConfig = require("./config/db.config");
 const path = require("path");
 require("dotenv").config();
 
 const app = express();
 // serving out react static files
-app.use(express.static(path.resolve(__dirname, "../ui-client/build")));
+app.use(express.static(path.resolve(__dirname, "./ui-client/build")));
 
 var corsOptions = {
   origin: "http://localhost:3000",
@@ -20,11 +20,11 @@ app.use(express.json());
 // parse requests of content-type - application/x-www-form-urlencoded
 app.use(express.urlencoded({ extended: true }));
 
-const db = require("../server/model");
+const db = require("./model");
 const Role = db.role;
 
 db.mongoose
-  .connect(process.env.MONGODB_URI, {
+  .connect(dbConfig.URI, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   })
@@ -43,12 +43,12 @@ app.get("/api", (req, res) => {
 });
 
 // routes
-require("../server/routes/auth.routes")(app);
-require("../server/routes/user.routes")(app);
+require("./routes/auth.routes")(app);
+require("./routes/user.routes")(app);
 
 // All other GET requests not handled before will return our React app
 app.get("*", (req, res) => {
-  res.sendFile(path.resolve(__dirname, "../ui-client/build", "index.html"));
+  res.sendFile(path.resolve(__dirname, "./ui-client/build", "index.html"));
 });
 
 // set port, listen for requests
