@@ -1,8 +1,11 @@
 const express = require("express");
 const cors = require("cors");
 const dbConfig = require("../server/config/db.config");
+const path = require("path");
 
 const app = express();
+// serving out react static files
+app.use(express.static(path.resolve(__dirname, "../ui-client/build")));
 
 var corsOptions = {
   origin: "http://localhost:3000",
@@ -20,7 +23,7 @@ const db = require("../server/model");
 const Role = db.role;
 
 db.mongoose
-  .connect(`mongodb://${dbConfig.HOST}:${dbConfig.PORT}/${dbConfig.DB}`, {
+  .connect(`${dbConfig.URI}`, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   })
@@ -34,13 +37,18 @@ db.mongoose
   });
 
 // simple route
-app.get("/", (req, res) => {
+app.get("/api", (req, res) => {
   res.json({ message: "Welcome to Bad Bank application." });
 });
 
 // routes
 require("../server/routes/auth.routes")(app);
 require("../server/routes/user.routes")(app);
+
+// All other GET requests not handled before will return our React app
+app.get("*", (req, res) => {
+  res.sendFile(path.resolve(__dirname, "../ui-client/build", "index.html"));
+});
 
 // set port, listen for requests
 const PORT = process.env.PORT || 3001;

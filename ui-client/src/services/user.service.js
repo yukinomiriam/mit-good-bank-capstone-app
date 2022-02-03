@@ -1,7 +1,7 @@
 import axios from "axios";
 import authHeader from "./auth-header";
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3001;
 const API_URL = "http://localhost:" + PORT + "/api/user/";
 
 class UserService {
