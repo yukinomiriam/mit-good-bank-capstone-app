@@ -7,12 +7,39 @@ import EventBus from "../../common/EventBus";
 import CurrencyFormat from "react-currency-format";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import * as solid from "@fortawesome/free-solid-svg-icons";
+import { MDBDataTableV5 } from "mdbreact";
 
 const Welcome = () => {
   const { user: currentUser } = useSelector((state) => state.auth);
-  //const { isLoggedIn } = useSelector((state) => state.auth);
   const [balance, setBalance] = useState(0);
   const [transList, setTransList] = useState([]);
+  const columns = [
+    {
+      label: "Trans Number",
+      field: "tranNumber",
+      width: 150,
+    },
+    {
+      label: "Trans Type",
+      field: "tranType",
+      width: 150,
+    },
+    {
+      label: "Amount",
+      field: "amount",
+      width: 150,
+    },
+    {
+      label: "Date",
+      field: "date",
+      width: 150,
+    },
+    {
+      label: "Time",
+      field: "time",
+      width: 150,
+    },
+  ];
 
   useEffect(() => {
     if (currentUser) {
@@ -62,6 +89,23 @@ const Welcome = () => {
     }
   }, []);
 
+  function buildRows() {
+    let tempRows = [];
+    if (transList) {
+      for (const transaction of transList) {
+        let t = {
+          tranNumber: transaction.tranNumber,
+          tranType: transaction.tranType,
+          amount: transaction.amount,
+          date: new Date(transaction.createdDate).toLocaleDateString("en-US"),
+          time: new Date(transaction.createdDate).toLocaleTimeString(),
+        };
+        tempRows.push(t);
+      }
+    }
+    return tempRows;
+  }
+  let rows = buildRows();
   return (
     <>
       {currentUser ? (
@@ -103,51 +147,20 @@ const Welcome = () => {
                     Transactions
                   </h6>
                 </div>
-
-                <table className="brand-table">
-                  <thead>
-                    <tr>
-                      <th className="brand-table-th-small">Tans Number</th>
-                      <th className="brand-table-th-small">Trans Type</th>
-                      <th className="brand-table-th-small">Amount</th>
-                      <th className="brand-table-th-small">Date</th>
-                      <th className="brand-table-th-small">Time</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {transList.size > 0 &&
-                      transList.map((transaction, i) => (
-                        <tr>
-                          <td className="brand-table-td-small">
-                            {transaction.tranNumber}
-                          </td>
-                          <td className="brand-table-td-small">
-                            {transaction.tranType}
-                          </td>
-                          <td className="brand-table-td-small">
-                            {
-                              <CurrencyFormat
-                                value={transaction.amount.toFixed(2)}
-                                displayType={"text"}
-                                thousandSeparator={true}
-                                prefix={"$"}
-                              />
-                            }
-                          </td>
-                          <td className="brand-table-td-small">
-                            {new Date(
-                              transaction.createdDate
-                            ).toLocaleDateString("en-US")}
-                          </td>
-                          <td className="brand-table-td-small">
-                            {new Date(
-                              transaction.createdDate
-                            ).toLocaleTimeString()}
-                          </td>
-                        </tr>
-                      ))}
-                  </tbody>
-                </table>
+                <div className="row">
+                  <MDBDataTableV5
+                    hover
+                    striped
+                    searchTop
+                    searchBottom={false}
+                    entriesOptions={[5, 10, 15]} //drop down for num records per page
+                    entries={5} //entries per page
+                    sorting={false}
+                    pagesAmount={5}
+                    paginationLabel={["Previous", "Next"]}
+                    data={{ columns, rows }}
+                  />
+                </div>
               </div>
             </>
           }
