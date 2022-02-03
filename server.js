@@ -8,11 +8,11 @@ const app = express();
 // serving out react static files
 app.use(express.static(path.resolve(__dirname, "./ui-client/build")));
 
-var corsOptions = {
+/*var corsOptions = {
   origin: "http://localhost:3000",
 };
 
-app.use(cors(corsOptions));
+app.use(cors(corsOptions));*/
 
 // parse requests of content-type - application/json
 app.use(express.json());
