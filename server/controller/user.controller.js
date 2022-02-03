@@ -3,9 +3,8 @@ const db = require("../model");
 const User = db.user;
 const Role = db.role;
 const Transaction = require("./transaction.controller");
-// -- logic to get user/account details
 
-//find user by id
+// ---------------------------------- Find user by ID ------------------------------
 exports.getById = (req, res) => {
   console.log("called: getById");
   User.findById(req.params.id, function (err, user) {
@@ -21,7 +20,7 @@ exports.getById = (req, res) => {
   });
 };
 
-//get user's balance by id
+// ---------------------------------- Get user's balance by ID ------------------------------
 exports.getUserBalanceById = (req, res) => {
   console.log("called: getUserBalanceById");
   User.findById(req.params.id, function (err, user) {
@@ -36,7 +35,7 @@ exports.getUserBalanceById = (req, res) => {
   });
 };
 
-// get's all the users
+// ---------------------------------- Get all the users ------------------------------
 exports.getAll = (req, res) => {
   console.log("called: getAll");
   let usersList = [];
@@ -71,7 +70,7 @@ exports.getAll = (req, res) => {
     });
 };
 
-//update's user balance by id
+// ---------------------------------- Update's user balance by id ------------------------------
 exports.updateUserBalanceById = (req, res) => {
   console.log("called: updateUserBalanceById");
   const newBalance = Number(req.body.balance);
