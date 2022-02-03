@@ -1,7 +1,8 @@
 const express = require("express");
 const cors = require("cors");
-const dbConfig = require("../server/config/db.config");
+const dbConfig = require("../config/db.config");
 const path = require("path");
+require("dotenv").config();
 
 const app = express();
 // serving out react static files
@@ -23,7 +24,7 @@ const db = require("../server/model");
 const Role = db.role;
 
 db.mongoose
-  .connect(`${dbConfig.URI}`, {
+  .connect(process.env.MONGODB_URI, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   })
