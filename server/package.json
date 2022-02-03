@@ -4,13 +4,12 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js",
-    "build": "cd ui-client && npm install && npm run build",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node server/server.js",
+    "heroku-postbuild": "cd ui-client && npm install --only=dev && npminstall && npm run build"
   },
   "keywords": [],
   "author": "",
-  "license": "ISC",
+  "license": "MIT",
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "cors": "^2.8.5",
