@@ -96,7 +96,14 @@ const Welcome = () => {
         let t = {
           tranNumber: transaction.tranNumber,
           tranType: transaction.tranType,
-          amount: transaction.amount,
+          amount: (
+            <CurrencyFormat
+              value={transaction.amount.toFixed(2)}
+              displayType={"text"}
+              thousandSeparator={true}
+              prefix={"$"}
+            />
+          ),
           date: new Date(transaction.createdDate).toLocaleDateString("en-US"),
           time: new Date(transaction.createdDate).toLocaleTimeString(),
         };

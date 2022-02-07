@@ -72,7 +72,6 @@ exports.getAll = (req, res) => {
 
 // ---------------------------------- Update's user balance by id ------------------------------
 exports.updateUserBalanceById = (req, res) => {
-  console.log("called: updateUserBalanceById");
   const newBalance = Number(req.body.balance);
   const transAmount = Number(req.body.amount);
   const transType = req.body.transType;

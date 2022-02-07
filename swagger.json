@@ -1,0 +1,351 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "My Bank APP",
+    "description": "My Banking Application API",
+    "license": {
+      "name": "MIT",
+      "url": "http://localhost:3001"
+    },
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:3001/"
+    }
+  ],
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    },
+    "schemas": {
+      "User": {
+        "required": [
+          "balance",
+          "dob",
+          "email",
+          "firstName",
+          "lastName",
+          "password",
+          "roles"
+        ],
+        "type": "object",
+        "properties": {
+          "_id": {
+            "type": "string"
+          },
+          "firstName": {
+            "type": "string"
+          },
+          "lastName": {
+            "type": "string"
+          },
+          "dob": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          },
+          "balance": {
+            "type": "number"
+          },
+          "roles": {
+            "type": "string"
+          },
+          "accessToken": {
+            "type": "string"
+          }
+        }
+      },
+      "Transaction": {
+        "type": "object",
+        "properties": {
+          "_id": {
+            "type": "string"
+          },
+          "tranType": {
+            "type": "string"
+          },
+          "tranNumber": {
+            "type": "number"
+          },
+          "amount": {
+            "type": "number"
+          },
+          "createdDate": {
+            "type": "string"
+          },
+          "acct": {
+            "type": "number"
+          },
+          "userID": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  },
+  "security": [
+    {
+      "bearerAuth": []
+    }
+  ],
+  "tags": [
+    {
+      "name": "Transaction",
+      "description": "User's activity"
+    },
+    {
+      "name": "User",
+      "description": "App User"
+    }
+  ],
+  "paths": {
+    "/api/auth/createAccount": {
+      "post": {
+        "tags": ["User"],
+        "summary": "Creates User Account",
+        "requestBody": {
+          "description": "User we want to create the account for",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/User"
+              }
+            }
+          },
+          "required": false
+        },
+        "responses": {
+          "200": {
+            "description": "User was registered successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          }
+        },
+        "x-codegen-request-body-name": "user"
+      }
+    },
+    "/api/auth/signin": {
+      "post": {
+        "tags": ["User"],
+        "summary": "Logs User into the system",
+        "requestBody": {
+          "description": "User we want to sign in",
+          "content": {
+            "application/json": {
+              "schema": {
+                "required": ["email", "password"],
+                "type": "object",
+                "properties": {
+                  "email": {
+                    "type": "string"
+                  },
+                  "password": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          },
+          "required": false
+        },
+        "responses": {
+          "200": {
+            "description": "User is logged in",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          }
+        },
+        "x-codegen-request-body-name": "user"
+      }
+    },
+    "/api/user/{id}": {
+      "get": {
+        "tags": ["User"],
+        "summary": "Gets User by ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "User's ID",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/api/user/balance/{id}": {
+      "get": {
+        "tags": ["User"],
+        "summary": "Gets User's Account Balance by ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "User's ID",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/api/user/update/balance/{id}": {
+      "put": {
+        "tags": ["User"],
+        "summary": "Updates User's Account Balance ",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "User's ID",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/api/user/all/{id}": {
+      "get": {
+        "tags": ["User"],
+        "summary": "Gets All the users if the user ID has an ADMIN role",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "User's ID",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/api/user/transactions/{id}": {
+      "get": {
+        "tags": ["Transaction"],
+        "summary": "Gets User's Account Transactions by ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "User's ID",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Transaction"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    }
+  }
+}

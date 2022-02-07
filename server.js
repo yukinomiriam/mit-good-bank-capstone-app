@@ -2,6 +2,9 @@ const express = require("express");
 const cors = require("cors");
 const dbConfig = require("./config/db.config");
 const path = require("path");
+const swaggerUi = require("swagger-ui-express");
+const swaggerDocument = require("./swagger.json");
+
 require("dotenv").config();
 
 const app = express();
@@ -37,6 +40,8 @@ db.mongoose
 app.get("/api", (req, res) => {
   res.json({ message: "Welcome to Bad Bank application." });
 });
+// API documentation route
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 // routes
 require("./routes/auth.routes")(app);

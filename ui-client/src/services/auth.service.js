@@ -1,12 +1,11 @@
 import axios from "axios";
 
-//const PORT = process.env.PORT || 3001;
-//const API_URL = "http://localhost:" + PORT + "/api/auth/";
 const API_URL = "/api/auth/";
 const DEFAULT_BALANCE = 0;
 const DEFAULT_ROLE = ["USER"];
 
 class AuthService {
+  // 
   login(email, password) {
     console.log("API_URL: " + API_URL);
     return axios
@@ -22,12 +21,12 @@ class AuthService {
         return response.data;
       });
   }
-
+  //
   logout() {
     localStorage.removeItem("user");
     console.log("logout");
   }
-
+  //
   register(firstName, lastName, dob, email, password) {
     const newUser = {
       firstName: firstName,

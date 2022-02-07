@@ -25,7 +25,7 @@ module.exports = function (app) {
    * @param : id - user ID
    */
   app.put(
-    "/api/user/balance/:id",
+    "/api/user/update/balance/:id",
     [authJwt.verifyToken],
     controller.updateUserBalanceById
   );

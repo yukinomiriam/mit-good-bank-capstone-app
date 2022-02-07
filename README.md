@@ -86,7 +86,7 @@ For any questions, you can reach out to me by email: yukinomiriam@gmail.com.
 
 ### `Live Page`
 
-[http://miriam-bade-bankingapp.s3-website.us-east-2.amazonaws.com/#/](http://miriam-bade-bankingapp.s3-website.us-east-2.amazonaws.com/#/)
+[https://miriam-bade-banking-app.herokuapp.com/](https://miriam-bade-banking-app.herokuapp.com/)
 
 ## LICENSE
 

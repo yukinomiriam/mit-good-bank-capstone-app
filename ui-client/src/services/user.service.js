@@ -24,7 +24,9 @@ class UserService {
     };
     console.log("updateUserBalance: " + API_URL + "balance/" + userID);
     return axios
-      .put(API_URL + "balance/" + userID, body, { headers: authHeader() })
+      .put(API_URL + "update/balance/" + userID, body, {
+        headers: authHeader(),
+      })
       .then((response) => {
         console.log("response: updateUserBalance");
         console.log(response.data);
