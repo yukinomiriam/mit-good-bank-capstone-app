@@ -5,13 +5,13 @@
     "description": "My Banking Application API",
     "license": {
       "name": "MIT",
-      "url": "http://localhost:3001"
+      "url": "https://miriam-bade-banking-app.herokuapp.com/"
     },
     "version": "1.0.0"
   },
   "servers": [
     {
-      "url": "http://localhost:3001/"
+      "url": "https://miriam-bade-banking-app.herokuapp.com/"
     }
   ],
   "components": {
