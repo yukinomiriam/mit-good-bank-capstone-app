@@ -1,14 +1,14 @@
 {
   "files": {
     "main.css": "/static/css/main.c6e60cec.css",
-    "main.js": "/static/js/main.19c596f9.js",
+    "main.js": "/static/js/main.9d677917.js",
     "static/media/bank-couple.jpg": "/static/media/bank-couple.67a7022ce70e60661fc2.jpg",
     "index.html": "/index.html",
     "main.c6e60cec.css.map": "/static/css/main.c6e60cec.css.map",
-    "main.19c596f9.js.map": "/static/js/main.19c596f9.js.map"
+    "main.9d677917.js.map": "/static/js/main.9d677917.js.map"
   },
   "entrypoints": [
     "static/css/main.c6e60cec.css",
-    "static/js/main.19c596f9.js"
+    "static/js/main.9d677917.js"
   ]
 }

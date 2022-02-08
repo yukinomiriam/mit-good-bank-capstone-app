@@ -1,37 +1,28 @@
-import CurrencyFormat from "react-currency-format";
+import AccountHeader from "../account/AccountHeader";
 
 function AccountBalanceForm(props) {
   return (
     <>
-      <div className="balance-container">
-        <div className="balance-title">
-          <h5>Balance: </h5>
-        </div>
-        <div className="balance-amount">
-          <h5>
-            <label id="amtBalance" >
-              <CurrencyFormat
-                value={props.total.toFixed(2)}
-                displayType={"text"}
-                thousandSeparator={true}
-                prefix={"$"}
-              />
-            </label>
-          </h5>
-        </div>
-      </div>
+      <AccountHeader currentUser={props.currentUser} balance={props.balance} />
       <br />
-      <div className="balance-container">
-        <div className="label-title">
-          <label htmlFor={`amt${props.label}`}> {props.label} Amount:</label>
-        </div>
-        <div className="amount-container">
-          <input
-            id={`amt${props.label}`}
-            placeholder="0"
-            className="form-control amount-input"
-            onChange={props.validateTransaction}
-          ></input>
+      <div className="container">
+        <div className="row justify-content-center">
+          <div className="col-4">
+            <h5>
+              <label htmlFor={`amt${props.label}`}>
+                {" "}
+                {props.label} Amount:
+              </label>
+            </h5>
+          </div>
+          <div className="col-4">
+            <input
+              id={`amt${props.label}`}
+              placeholder="0"
+              className="form-control amount-input"
+              onChange={props.validateTransaction}
+            ></input>
+          </div>
         </div>
       </div>
       <br />

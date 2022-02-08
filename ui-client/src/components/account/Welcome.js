@@ -8,6 +8,7 @@ import CurrencyFormat from "react-currency-format";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import * as solid from "@fortawesome/free-solid-svg-icons";
 import { MDBDataTableV5 } from "mdbreact";
+import AccountHeader from "./AccountHeader";
 
 const Welcome = () => {
   const { user: currentUser } = useSelector((state) => state.auth);
@@ -122,30 +123,7 @@ const Welcome = () => {
           maxWidth="60rem"
           body={
             <>
-              <div className="container bottom-border">
-                <div className="row">
-                  <div className="col">
-                    <h4>
-                      {currentUser.firstName} {currentUser.lastName}
-                    </h4>
-                  </div>
-                  <div className="col"></div>
-                  <div className="col">
-                    <h5>
-                      Account Balance:{" "}
-                      <CurrencyFormat
-                        value={balance.toFixed(2)}
-                        displayType={"text"}
-                        thousandSeparator={true}
-                        prefix={"$"}
-                      />
-                    </h5>
-                  </div>
-                </div>
-                <div className="row">
-                  <br />
-                </div>
-              </div>
+              <AccountHeader currentUser={currentUser} balance={balance} />
               <br />
               <div className="container">
                 <div className="row">

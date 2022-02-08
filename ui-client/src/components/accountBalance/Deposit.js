@@ -114,7 +114,8 @@ function Deposit() {
   const accountDepositComponent = (
     <AccountBalanceForm
       label="Deposit"
-      total={balance}
+      balance={balance}
+      currentUser={currentUser}
       validateTransaction={validateDeposit}
       handleSubmit={handleSubmit}
       validTransaction={validTransaction}
@@ -126,7 +127,7 @@ function Deposit() {
         <Card
           header="Deposit"
           className="card brand-centered brand-margin-top"
-          maxWidth="40rem"
+          maxWidth="60rem"
           status={status}
           successFlag={isSuccess}
           body={accountDepositComponent}

@@ -58,7 +58,7 @@ exports.getUserTrans = (req, res) => {
             });
           }
         }
-      );
+      ).sort({ createdDate: -1 });
     }
   });
 };

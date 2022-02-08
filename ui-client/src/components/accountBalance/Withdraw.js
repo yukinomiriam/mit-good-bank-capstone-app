@@ -127,7 +127,8 @@ function Withdraw(props) {
   const accountWithdrawComponent = (
     <AccountBalanceForm
       label="Withdraw"
-      total={balance}
+      balance={balance}
+      currentUser={currentUser}
       validateTransaction={validateWithdraw}
       handleSubmit={handleSubmit}
       validTransaction={validTransaction}
@@ -140,7 +141,7 @@ function Withdraw(props) {
         <Card
           header="Withdraw"
           className="card brand-centered brand-margin-top"
-          maxWidth="40rem"
+          maxWidth="60rem"
           status={status}
           successFlag={isSuccess}
           body={accountWithdrawComponent}
